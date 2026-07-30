@@ -1,1 +1,15 @@
 /data
+.DS_Store
+
+# Node.js local files
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local configuration and test output
+.env
+.env.*
+!.env.example
+coverage/

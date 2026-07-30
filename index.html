@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fais mes classes</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main class="layout">
+    <header class="page-heading">
+      <div class="brand-lockup">
+        <h1>Fais mes classes</h1>
+        <p>Une esquisse de répartition de classes, prête à partager.</p>
+      </div>
+      <div class="heading-tools">
+        <a id="contactLink" class="button-link"
+          href="mailto:julien.chevallier1@univ-grenoble-alpes.fr?subject=Fais%20mes%20classes%20-%20feedback">Contact</a>
+        <button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Activer le thème sombre"
+          aria-pressed="false" title="Changer de thème">
+          <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </header>
+
+    <section class="card import-card">
+      <div class="tab-heading">
+        <span class="tab tab-coral">Étape 1</span>
+        <h2>Importer les données</h2>
+      </div>
+      <details>
+        <summary><b>Instructions (format de données)</b></summary>
+        <p>Si vous rencontrez un problème, n'hésitez pas à <a id="contactLink"
+            href="mailto:julien.chevallier1@univ-grenoble-alpes.fr?subject=Fais%20mes%20classes%20-%20feedback">nous
+            contacter</a>.
+          Les données doivent être réparties dans deux fichiers CSV qui respectent le format suivant.</p>
+        <h4>CSV élèves</h4>
+        <p>Colonnes obligatoires:
+        <ul>
+          <li><code>id</code>: identifiant unique de l'élève (peut être son nom ou bien un identifiant anonyme).</li>
+          <li><code>comp</code>: entier de -2 à 2, représentant le comportement de l'élève. L'algorithme cherche à ce
+            que la
+            somme des comportements de chaque classe soit équilibrée.</li>
+          <li><code>avec</code>: liste d'identifiants d'élèves avec lesquels l'élève doit être regroupé (séparés par le
+            caractère <code>|</code>). Par exemple, un groupe d'amis qui fonctionne bien.</li>
+          <li><code>sans</code>: liste d'identifiants d'élèves avec lesquels l'élève ne doit pas être regroupé (séparés
+            par
+            le caractère <code>|</code>). Par exemple, des élèves en relation conflictuelle.</li>
+        </ul>
+        </p>
+        <p>Colonnes optionnelles:
+        <ul>
+          <li><code>rep1</code>, <code>rep2</code>, etc.: tous les élèves avec une cellule non vide seront répartis
+            uniformément au sein des classes. Par exemple, les élèves ayant un PAP.</li>
+          <li><code>app1</code>, <code>app2</code>, etc.: tous les élèves avec une cellule non vide seront appariés dans
+            une
+            même classe. Par exemple, les élèves ayant une même option.</li>
+          <li><code>poids_avec</code>: modifie le poids associé à la contrainte <code>avec</code>. Ne pas utiliser dans
+            un
+            premier temps.</li>
+          <li><code>poids_sans</code>: modifie le poids associé à la contrainte <code>sans</code>. Ne pas utiliser dans
+            un
+            premier temps.</li>
+        </ul>
+        </p>
+        <p>Exemple de données valides :</p>
+        <div id="studentsExamplePreview" class="preview-box example-preview" aria-label="Exemple de données élèves">
+        </div>
+        <ul>
+          <li><code>avec</code>: les élèves E1 et E3 seront regroupés.</li>
+          <li><code>sans</code>: les élèves E2 et E6 seront séparés.</li>
+          <li><code>rep1</code>: les élèves E5 et E6 seront séparés.</li>
+          <li><code>app1</code>: les élèves E1, E3 et E4 seront regroupés.</li>
+          <li><code>app2</code>: les élèves E2 et E8 seront regroupés.</li>
+        </ul>
+        <h4>CSV groupes</h4>
+        <p>Colonnes obligatoires:
+        <ul>
+          <li><code>groupe</code>: liste d'identifiants d'élèves appartenant au groupe (séparés par le caractère
+            <code>|</code>).
+          </li>
+          <li><code>poids</code>: entier strictement positif représentant le poids de la contrainte.</li>
+        </ul>
+        </p>
+        <p>Exemple de données valides :</p>
+        <div id="groupsExamplePreview" class="preview-box example-preview" aria-label="Exemple de données groupes">
+        </div>
+        <ul>
+          <li>Les élèves du groupe (E2, E7, E8, E9) ne seront pas isolés, quitte à faire deux groupes de deux.</li>
+          <li>Les élèves du groupe (E5, E6, E7) ne seront pas isolés.</li>
+          <li>La contrainte liée au premier groupe a un poids plus important que celle liée au second groupe. S'il doit
+            choisir entre les deux, l'algorithme privilégiera donc le premier groupe.</li>
+        </ul>
+      </details>
+      <br>
+      <h3>CSV élèves</h3>
+      <div class="file-row">
+        <input id="studentsFile" class="hidden-file" type="file" accept=".csv,text/csv" />
+        <button id="pickStudentsBtn" type="button">Choisir un fichier</button>
+        <span id="studentsFileName" class="file-name">Aucun fichier choisi</span>
+        <button id="showStudentsFullBtn" type="button" disabled>Voir CSV élèves complet</button>
+      </div>
+      <div class="preview-wrap">
+        <h3>Aperçu CSV élèves</h3>
+        <div id="studentsPreview" class="preview-box">Aucun fichier importé.</div>
+      </div>
+
+      <h3>CSV groupes</h3>
+      <div class="file-row">
+        <input id="groupsFile" class="hidden-file" type="file" accept=".csv,text/csv" />
+        <button id="pickGroupsBtn" type="button">Choisir un fichier</button>
+        <span id="groupsFileName" class="file-name">Aucun fichier choisi</span>
+        <button id="showGroupsFullBtn" type="button" disabled>Voir CSV groupes complet</button>
+      </div>
+      <div class="preview-wrap">
+        <h3>Aperçu CSV groupes</h3>
+        <div id="groupsPreview" class="preview-box">Aucun fichier importé.</div>
+      </div>
+    </section>
+
+    <div class="run-action">
+      <span class="action-note">Paramètres ajustables en bas de page.</span>
+      <button id="runBtn" type="button"><span class="button-mark" aria-hidden="true">&#10003;</span> Lancer le
+        regroupement</button>
+    </div>
+
+    <section class="card results-card">
+      <div class="tab-heading">
+        <span class="tab tab-yellow">Étape 2</span>
+        <h2>Répartitions</h2>
+      </div>
+      <div class="result-actions">
+        <button id="exportBtn" disabled>Exporter CSV</button>
+        <button id="copyBtn" type="button" disabled>Copier pour tableur</button>
+        <span id="copyStatus" role="status" aria-live="polite"></span>
+      </div>
+      <p>Les scores sont négatifs en général. Les meilleures répartitions ont un score plus haut (un score de -82 est
+        meilleur
+        que -103).</p>
+      <div id="errorBox" class="error"></div>
+      <div id="resultBlocks"></div>
+    </section>
+
+    <section class="card settings-card">
+      <div class="tab-heading">
+        <span class="tab tab-teal">Optionnel</span>
+        <h2>Paramètres</h2>
+      </div>
+      <div class="grid">
+        <label>Nombre de classes <input id="numClasses" type="number" min="1" value="4" /></label>
+        <label>Maximum d'élèves par classe <input id="maxPerClass" type="number" min="1" value="30" /></label>
+        <label>Maximum d'itérations <input id="maxIterations" type="number" min="100" value="1000" step="100" /></label>
+        <label>Nombre de propositions <input id="numProposals" type="number" min="1" max="3" value="3" /></label>
+      </div>
+      <br>
+      <details>
+        <summary><b>Paramètres supplémentaires (poids des contraintes)</b></summary>
+        <br>
+        <div class="grid">
+          <label>Taille maximale d'une classe <input id="maxClassSizeWeight" type="number" min="0" value="50" /></label>
+          <label>Équilibre des comportements (comp) <input id="behaviorBalanceWeight" type="number" min="0"
+              value="10" /></label>
+          <label>Répartition uniforme (rep) <input id="repartitionBalanceWeight" type="number" min="0"
+              value="20" /></label>
+          <label>Appariement (app) <input id="appariementWeight" type="number" min="0" value="50" /></label>
+          <label>Équilibre de la taille des classes <input id="classSizeBalanceWeight" type="number" min="0"
+              value="2" /></label>
+          <label>Avec <input id="defaultAvecWeight" type="number" min="0" value="3" /></label>
+          <label>Sans <input id="defaultSansWeight" type="number" min="0" value="3" /></label>
+          <label>Groupe <input id="isolationPenaltyWeight" type="number" min="0" value="2" /></label>
+          <label>Bonus groupe dans une même classe <input id="groupCompleteBonusWeight" type="number" min="0"
+              value="1" /></label>
+        </div>
+      </details>
+    </section>
+
+  </main>
+
+  <dialog id="csvModal" class="modal">
+    <h3 id="csvModalTitle">Contenu CSV</h3>
+    <div id="csvModalContent" class="modal-content"></div>
+    <button id="csvModalCloseBtn" type="button">Fermer</button>
+  </dialog>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+
+</html>

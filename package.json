@@ -1,0 +1,11 @@
+{
+  "name": "fais-mes-classes",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "typecheck": "node --check src/*.js",
+    "prepare": "git config core.hooksPath .githooks"
+  }
+}
