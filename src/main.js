@@ -239,18 +239,35 @@ function renderResult(result) {
   thead.innerHTML = '<tr><th>id</th><th>Proposition 1</th><th>Proposition 2</th><th>Proposition 3</th></tr>';
   table.appendChild(thead);
 
+  let studentIndexes;
+  if (result.students.length >= 5) {
+    studentIndexes = [0, 1, null, result.students.length - 2, result.students.length - 1];
+  } else {
+    studentIndexes = result.students.map((_, index) => index);
+  }
+  
   const tbody = document.createElement('tbody');
-  result.students.forEach((id, studentIdx) => {
+  studentIndexes.forEach((studentIdx) => {
+    if (studentIdx === null) {
+      const tr = document.createElement('tr');
+      tr.className = 'ellipsis-row';
+      tr.innerHTML = '<td colspan="4">⋮</td>';
+      tbody.appendChild(tr);
+      return;
+    }
+
     const tr = document.createElement('tr');
-    const cols = [id];
+    const cols = [result.students[studentIdx]];
+
     for (let p = 0; p < 3; p += 1) {
       const proposal = result.proposals[p];
       if (!proposal || proposal.score === null || proposal.assignment[studentIdx] === null) {
         cols.push('');
       } else {
-          cols.push(classLabel(proposal.assignment[studentIdx]));
+        cols.push(classLabel(proposal.assignment[studentIdx]));
       }
     }
+
     tr.innerHTML = `<td>${cols.map((value) => escapeHtml(value)).join('</td><td>')}</td>`;
     tbody.appendChild(tr);
   });
