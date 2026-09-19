@@ -117,21 +117,21 @@ function escapeHtml(value) {
 
 const studentsExampleCsv = `
 id;comp;avec;sans;rep1;rep2;app1;app2
-E1;-1;E3;;;;x;
-E2;1;;E6;;;;x
-E3;2;E1;;;;x;
-E4;;;;;;;
-E5;1;;;x;;;
-E6;;;E2;x;;;
-E7;-1;;;;;x;
-E8;;;;;;;x
+Alice;-1;Charlie;;;;x;
+Bob;1;;Frank;;;;x
+Charlie;2;Alice;;;;x;
+David;;;;;;;
+Eve;1;;;x;;;
+Frank;;;Bob;x;;;
+Gaston;-1;;;;;x;
+Hélène;;;;;;;x
 E9;;;;;;;
 `;
 
 const groupsExampleCsv = `
 groupe;poids
-E2|E7|E8|E9;5
-E5|E6|E7;3
+Bob|Gaston|Hélène|E9;5
+Eve|Frank|Gaston;3
 `;
 
 function renderCsvTable(targetEl, csvText, maxRows, compact) {
