@@ -75,6 +75,7 @@ function getParams() {
     isolationPenaltyWeight: Number(document.getElementById('isolationPenaltyWeight').value),
     groupCompleteBonusWeight: Number(document.getElementById('groupCompleteBonusWeight').value),
     numProposals: Number(document.getElementById('numProposals').value),
+    numAttempts: Number(document.getElementById('numAttempts').value),
   };
 }
 

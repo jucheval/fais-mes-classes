@@ -624,7 +624,8 @@ function normalizeParams(input = {}) {
     defaultSansWeight: Number(input.defaultSansWeight ?? 3),
     isolationPenaltyWeight: Number(input.isolationPenaltyWeight ?? 2),
     groupCompleteBonusWeight: Number(input.groupCompleteBonusWeight ?? 1),
-    numProposals: Math.min(3, Math.max(1, Number(input.numProposals ?? 3))),
+    numProposals: Math.min(5, Math.max(1, Number(input.numProposals ?? 3))),
+    numAttempts: Math.max(10, Number(input.numAttempts ?? 50)),
   };
 }
 
@@ -638,7 +639,7 @@ export function classifyFromCsvTexts(studentsCsvText, groupsCsvText, userParams)
   const data = buildData(studentsResult.students, groups, studentsResult.repCols, studentsResult.appCols);
   const params = normalizeParams(userParams);
 
-  const attempts = Math.max(params.numProposals * 4, 8);
+  const attempts = params.numAttempts;
   const seen = new Set();
   const candidates = [];
 

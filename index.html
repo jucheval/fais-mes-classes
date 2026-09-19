@@ -27,11 +27,11 @@
 
     <section class="card import-card">
       <div class="tab-heading">
-        <span class="tab tab-coral">Étape 1</span>
+        <span class="tab tab-yellow">Étape 1</span>
         <h2>Importer les données</h2>
       </div>
       <details>
-        <summary><b>Instructions (format de données)</b></summary>
+        <summary><b>Instructions sur le format de données</b></summary>
         <p>Si vous rencontrez un problème, n'hésitez pas à <a id="contactLink"
             href="mailto:julien.chevallier1@univ-grenoble-alpes.fr?subject=Fais%20mes%20classes%20-%20feedback">nous
             contacter</a>.
@@ -120,15 +120,26 @@
       </div>
     </section>
 
+    <section class="card settings-card">
+      <div class="tab-heading">
+        <span class="tab tab-yellow">Étape 2</span>
+        <h2>Paramètres</h2>
+      </div>
+      <div class="grid">
+        <label>Nombre de classes <input id="numClasses" type="number" min="1" value="4" /></label>
+        <label>Maximum d'élèves par classe <input id="maxPerClass" type="number" min="1" value="30" /></label>
+        <label>Nombre de propositions <input id="numProposals" type="number" min="1" max="5" value="3" /></label>
+      </div>
+    </section>
+
     <div class="run-action">
-      <span class="action-note">Paramètres ajustables en bas de page.</span>
       <button id="runBtn" type="button"><span class="button-mark" aria-hidden="true">&#10003;</span> Lancer le
         regroupement</button>
     </div>
 
     <section class="card results-card">
       <div class="tab-heading">
-        <span class="tab tab-yellow">Étape 2</span>
+        <span class="tab tab-yellow">Étape 3</span>
         <h2>Répartitions</h2>
       </div>
       <div class="result-actions">
@@ -145,35 +156,29 @@
 
     <section class="card settings-card">
       <div class="tab-heading">
-        <span class="tab tab-teal">Optionnel</span>
-        <h2>Paramètres</h2>
+        <span class="tab tab-yellow">Optionnel</span>
+        <h2>Paramètres supplémentaires</h2>
       </div>
       <div class="grid">
-        <label>Nombre de classes <input id="numClasses" type="number" min="1" value="4" /></label>
-        <label>Maximum d'élèves par classe <input id="maxPerClass" type="number" min="1" value="30" /></label>
         <label>Maximum d'itérations <input id="maxIterations" type="number" min="100" value="1000" step="100" /></label>
-        <label>Nombre de propositions <input id="numProposals" type="number" min="1" max="3" value="3" /></label>
+        <label>Nombre d'initialisations <input id="numAttempts" type="number" min="10" value="50" step="10" /></label>
       </div>
-      <br>
-      <details>
-        <summary><b>Paramètres supplémentaires (poids des contraintes)</b></summary>
-        <br>
-        <div class="grid">
-          <label>Taille maximale d'une classe <input id="maxClassSizeWeight" type="number" min="0" value="50" /></label>
-          <label>Équilibre des comportements (comp) <input id="behaviorBalanceWeight" type="number" min="0"
-              value="10" /></label>
-          <label>Répartition uniforme (rep) <input id="repartitionBalanceWeight" type="number" min="0"
-              value="20" /></label>
-          <label>Appariement (app) <input id="appariementWeight" type="number" min="0" value="50" /></label>
-          <label>Équilibre de la taille des classes <input id="classSizeBalanceWeight" type="number" min="0"
-              value="2" /></label>
-          <label>Avec <input id="defaultAvecWeight" type="number" min="0" value="3" /></label>
-          <label>Sans <input id="defaultSansWeight" type="number" min="0" value="3" /></label>
-          <label>Groupe <input id="isolationPenaltyWeight" type="number" min="0" value="2" /></label>
-          <label>Bonus groupe dans une même classe <input id="groupCompleteBonusWeight" type="number" min="0"
-              value="1" /></label>
-        </div>
-      </details>
+      <h3>Poids des contraintes :</h3>
+      <div class="grid">
+        <label>Taille maximale d'une classe <input id="maxClassSizeWeight" type="number" min="0" value="50" /></label>
+        <label>Équilibre des comportements (comp) <input id="behaviorBalanceWeight" type="number" min="0"
+            value="10" /></label>
+        <label>Répartition uniforme (rep) <input id="repartitionBalanceWeight" type="number" min="0"
+            value="20" /></label>
+        <label>Appariement (app) <input id="appariementWeight" type="number" min="0" value="50" /></label>
+        <label>Équilibre de la taille des classes <input id="classSizeBalanceWeight" type="number" min="0"
+            value="2" /></label>
+        <label>Avec <input id="defaultAvecWeight" type="number" min="0" value="3" /></label>
+        <label>Sans <input id="defaultSansWeight" type="number" min="0" value="3" /></label>
+        <label>Groupe <input id="isolationPenaltyWeight" type="number" min="0" value="2" /></label>
+        <label>Bonus groupe dans une même classe <input id="groupCompleteBonusWeight" type="number" min="0"
+            value="1" /></label>
+      </div>
     </section>
 
   </main>
